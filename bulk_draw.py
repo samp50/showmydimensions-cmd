@@ -2,6 +2,7 @@ import cv2
 import os
 
 def draw_bounding_box_lines(image_path, output_path):
+    isResized = False
     font_scale = 0.5
     font_thickness = 2
     # Load the image
@@ -29,6 +30,7 @@ def draw_bounding_box_lines(image_path, output_path):
             # Update the bounding box coordinates after border addition
             x += border_width
             y += border_height
+            isResized = True
 
         # Draw the left line with an arrow at the top
         cv2.arrowedLine(image, (x - 50, y + h), (x - 50, y), (0, 255, 0), 2, tipLength=0.05)
@@ -42,6 +44,7 @@ def draw_bounding_box_lines(image_path, output_path):
 
     # Save the result
     cv2.imwrite(output_path, image)
+    return isResized
 
 def is_close_to_edge(x, y, w, h, image_width, image_height):
     third_w, third_h = w // 3, h // 3
@@ -59,5 +62,12 @@ def process_images(input_folder, output_folder):
             output_path = os.path.join(output_folder, filename)
             draw_bounding_box_lines(input_path, output_path)
 
+# Returns length & height arrow start/end points, isResized boolean value,
+# and link to image (resized or original) for each image path as arg. Send
+# 
+def return_image_data(output_path):
+    pass
+
+
 # Process all images in 'mens_shoes' and save to 'output'
-process_images('mens_shoes', 'output')
+process_images('test', 'output')
